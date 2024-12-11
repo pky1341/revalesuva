@@ -15,6 +15,7 @@ class AuthController extends Controller
     use ApiResponser;
     public function login(LoginFormRequest $request)
     {
+        
         $credentials = $request->only('email', 'password');
 
         if (Auth::attempt($credentials)) {

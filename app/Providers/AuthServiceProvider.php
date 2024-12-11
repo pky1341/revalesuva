@@ -15,12 +15,18 @@ class AuthServiceProvider extends ServiceProvider
         //
     }
 
+    protected $policies = [
+        // 'App\Model' => 'App\Policies\ModelPolicy',
+    ];
+
     /**
      * Bootstrap services.
      */
     public function boot(): void
     {
         // $this->registerPolicies();
-        // Passport::routes();
+        // if (! $this->app->routesAreCached()) {
+        //     Passport::routes();
+        // }
     }
 }

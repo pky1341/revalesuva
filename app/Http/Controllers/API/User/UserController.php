@@ -21,11 +21,17 @@ class UserController extends Controller
     use ApiResponser;
     public function update(Request $request)
     {
-        $userId = $request->input("user_id");
+        $user = Auth::user();
+        if (!$user) {
+            return $this->errorResponse(
+                'Unauthorized: Token is invalid or expired.',
+                401
+            );
+        }
         $validator = Validator::make($request->all(), [
             'name' => ['required', 'string', 'max:255'],
             'user_id' => ['required', Rule::exists('users', 'id')],
-            'username' => ['required', 'string', 'max:255', Rule::unique('users')->ignore($userId)],
+            'username' => ['required', 'string', 'max:255', Rule::unique('users')->ignore($user->id)],
             'dob' => ['required', 'date'],
             'contact_number' => ['nullable', 'string', 'max:15'],
             'height' => ['nullable', 'numeric'],
@@ -52,7 +58,7 @@ class UserController extends Controller
             return $this->errorResponse($validator->errors(), 422);
         }
 
-        $user = User::findOrFail($request->user_id);
+        // $user = User::findOrFail($request->user_id);
         $user->update([
             "name" => trim($request['name']),
             "username" => trim($request['username']),
@@ -124,32 +130,23 @@ class UserController extends Controller
             }
         }
 
-
-        try {
-            $token = $user->createToken('LaravelAuthApp')->accessToken;
-
-            return $this->successResponse([
-                "token" => $token,
-            ], "User updated successfully.");
-        } catch (\Exception $e) {
-            return $this->errorResponse('An error occurred while creating token.', 500);
-        }
+        return $this->successResponse([], "User updated successfully.");
     }
 
     public function getUser(Request $request)
     {
-        try{
-            $user_id=Auth::user();
+        try {
+            $user_id = Auth::user();
             if (!$user_id) {
-                return $this->errorResponse('Unauthorized: Token is invalid or expired.',401);
+                return $this->errorResponse('Unauthorized: Token is invalid or expired.', 401);
             }
-            $user = User::with('weights','circumferences','bloodTests','beforePictures')->findOrFail($user_id->id);
-            if($user) {
+            $user = User::with('weights', 'circumferences', 'bloodTests', 'beforePictures')->findOrFail($user_id->id);
+            if ($user) {
                 return $this->successResponse($user);
             }
             return $this->successResponse($user);
-        }catch(\Exception $e) {
-            return $this->errorResponse('something went wrong',500);
+        } catch (\Exception $e) {
+            return $this->errorResponse('something went wrong', 500);
         }
     }
 

@@ -113,4 +113,13 @@ class User extends Authenticatable
     {
         return $this->hasMany(BeforePicture::class);
     }
-}
+    public function technicalsupport()
+    {
+        return $this->hasMany(BloodTest::class);
+    }
+
+    public function inquiryservice()
+    {
+        return $this->hasMany(BeforePicture::class);
+    }
+} 
