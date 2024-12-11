@@ -10,5 +10,13 @@ class BloodTest extends Model
 
     protected $fillable = [
         "user_id","blood_test_report"
-        ];
+    ];
+
+
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
 }

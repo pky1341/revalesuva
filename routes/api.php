@@ -6,6 +6,7 @@ use App\Http\Controllers\API\User\AuthController;
 use App\Http\Controllers\API\User\UserController;
 use App\Http\Controllers\API\TechnicalSupportController;
 use App\Http\Controllers\API\ServiceInquiryController;
+use App\Http\Controllers\API\CMSController;
 
 // Route::get('/user', function (Request $request) {
 //     return $request->user();
@@ -21,7 +22,8 @@ Route::group(['prefix' => 'v1'], function () {
             Route::post('logout', [AuthController::class, 'logout'])->name('user.logout');
             Route::post('check-username', [UserController::class, 'checkUsername']);
         });
-        Route::post('technical-support', [TechnicalSupportController::class, 'technicalSupport']);
-        Route::post('service-inquiry', [ServiceInquiryController::class, 'inquirySercvice']);
     });
+    Route::post('technical-support', [TechnicalSupportController::class, 'technicalSupport']);
+    Route::post('service-inquiry', [ServiceInquiryController::class, 'inquirySercvice']);
+    Route::post('get-cms', [CMSController::class, 'getCMS']);
 });

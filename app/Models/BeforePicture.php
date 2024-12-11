@@ -14,4 +14,9 @@ class BeforePicture extends Model
         "side_pic",
         "front_pic",
     ];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }

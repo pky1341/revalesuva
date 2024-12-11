@@ -13,4 +13,9 @@ class TechnicalSupport extends Model
         "help_details",
         "status",
     ];
+
+
+    public function user(){
+        return $this->belongsTo(User::class);
+    }
 }
