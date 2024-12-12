@@ -14,9 +14,9 @@ return new class extends Migration
         Schema::create('before_pictures', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
-            $table->string('back_pic');
-            $table->string('side_pic');
-            $table->string('front_pic');
+            $table->string('back_pic')->nullable();
+            $table->string('side_pic')->nullable();
+            $table->string('front_pic')->nullable();
             $table->timestamps();
         });
     }

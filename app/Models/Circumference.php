@@ -5,9 +5,14 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 
 class Circumference extends Model
-{
-    protected $table = 'circumference';
-    protected $fillable = ["user_id", "chest", "waist", "hip"];
+{    
+    /**
+     * guarded
+     *
+     * @var array
+     */
+    protected $guarded = ['id', 'created_at', 'updated_at'];
+     public $timestamps = true;
 
     public function user()
     {

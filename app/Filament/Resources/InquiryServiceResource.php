@@ -9,6 +9,8 @@ use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
+use Filament\Tables\Columns\IconColumn;
+use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
@@ -31,14 +33,13 @@ class InquiryServiceResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('user.name')
+                TextColumn::make('user.name')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('help_question')
+                TextColumn::make('help_question')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('help_details')
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('created_at')->sortable(),
-                Tables\Columns\TextColumn::make('status')->sortable(),
+                TextColumn::make('help_details'),
+                IconColumn::make('is_active')->boolean(),
+                TextColumn::make('created_at')->sortable(),
             ])
             ->filters([
                 //

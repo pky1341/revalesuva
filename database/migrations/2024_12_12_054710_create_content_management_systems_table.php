@@ -11,12 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('content_management_system', function (Blueprint $table) {
+        Schema::create('content_management_systems', function (Blueprint $table) {
             $table->id();
             $table->string('title')->nullable();
             $table->string('slug')->nullable();
             $table->longText('description')->nullable();
-            $table->boolean('status')->default(0);
+            $table->boolean('is_active')->default(1);
             $table->timestamps();
         });
     }
@@ -26,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('content_management_system');
+        Schema::dropIfExists('content_management_systems');
     }
 };

@@ -5,33 +5,35 @@ namespace App\Filament\Resources;
 use App\Filament\Resources\CMSResource\Pages;
 use App\Filament\Resources\CMSResource\RelationManagers;
 use App\Models\CMS;
+use App\Models\ContentManagementSystem;
 use Filament\Forms;
+use Filament\Forms\Components\RichEditor;
+use Filament\Forms\Components\Select;
+use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
+use Filament\Tables\Columns\IconColumn;
+use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class CMSResource extends Resource
 {
-    protected static ?string $model = CMS::class;
+    protected static ?string $model = ContentManagementSystem::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $slug = 'content-management-system';
 
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('title')
-                    ->maxLength(25),
-
-                Forms\Components\TextInput::make('slug')
-                    ->maxLength(255),
-
-                Forms\Components\RichEditor::make('description'),
-
-                Forms\Components\Select::make('status')
+                TextInput::make('title'),
+                TextInput::make('slug'),
+                RichEditor::make('description'),
+                Select::make('is_active')
                     ->options([
                         '0' => 'Inactive',
                         '1' => 'Active',
@@ -43,15 +45,12 @@ class CMSResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('title')
+                TextColumn::make('title')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('slug')
+                TextColumn::make('slug')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('description')
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('status')
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('created_at')->sortable(),
+                IconColumn::make('is_active')->boolean(),
+                TextColumn::make('created_at')->sortable(),
             ])
             ->filters([
                 //

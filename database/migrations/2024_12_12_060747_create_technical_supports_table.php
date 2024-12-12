@@ -11,10 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('weight', function (Blueprint $table) {
+        Schema::create('technical_supports', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
-            $table->decimal('weight', 5, 2)->nullable();
+            $table->string('help_question')->nullable();
+            $table->longText('help_details')->nullable();
+            $table->boolean('is_active')->default(1);
             $table->timestamps();
         });
     }
@@ -24,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('weight');
+        Schema::dropIfExists('technical_supports');
     }
 };

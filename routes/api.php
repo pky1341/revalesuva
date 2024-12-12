@@ -25,5 +25,5 @@ Route::group(['prefix' => 'v1'], function () {
     });
     Route::post('technical-support', [TechnicalSupportController::class, 'technicalSupport']);
     Route::post('service-inquiry', [ServiceInquiryController::class, 'inquirySercvice']);
-    Route::post('get-cms', [CMSController::class, 'getCMS']);
+    Route::get('get-cms', [CMSController::class, 'getCMS']);
 });

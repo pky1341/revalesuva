@@ -11,12 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('circumference', function (Blueprint $table) {
+        Schema::create('circumferences', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
-            $table->double('chest', 8, 2);
-            $table->double('waist', 8, 2);
-            $table->double('hip', 8, 2);
+            $table->decimal('chest', 5, 2)->nullable();
+            $table->decimal('waist', 5, 2)->nullable();
+            $table->decimal('hip', 5, 2)->nullable();
             $table->timestamps();
         });
     }
@@ -26,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('circumference');
+        Schema::dropIfExists('circumferences');
     }
 };

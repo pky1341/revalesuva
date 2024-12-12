@@ -5,15 +5,14 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 
 class BeforePicture extends Model
-{
-    protected $table = "before_pictures";
-
-    protected $fillable = [
-        "user_id",
-        "back_pic",
-        "side_pic",
-        "front_pic",
-    ];
+{    
+    /**
+     * guarded
+     *
+     * @var array
+     */
+    protected $guarded = ['id', 'created_at', 'updated_at'];
+    public $timestamps = true;
 
     public function user()
     {

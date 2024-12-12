@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('blood_test', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
-            $table->string('blood_test_report');
+            $table->string('blood_test_report')->nullable();
             $table->timestamps();
         });
     }
