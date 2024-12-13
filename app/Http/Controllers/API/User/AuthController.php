@@ -9,13 +9,22 @@ use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use App\Traits\ApiResponser;
 use Laravel\Passport\Exceptions\OAuthServerException;
+use Illuminate\Support\Facades\Validator;
 
 class AuthController extends Controller
 {
     use ApiResponser;
-    public function login(LoginFormRequest $request)
+    public function login(Request $request)
     {
-        
+        $validator = Validator::make($request->all(), [
+            "email" => "",
+            "password" => ""
+        ]);
+
+        if ($validator->fails()) {
+            return $this->errorResponse($validator->errors(), 422);
+        }
+
         $credentials = $request->only('email', 'password');
 
         if (Auth::attempt($credentials)) {

@@ -152,16 +152,19 @@ class UserController extends Controller
 
     public function checkUsername(Request $request)
     {
-        $request->validate([
-            'username' => 'required|string|max:255',
+        $validator = Validator::make($request->all(), [
+            'user_name' => 'required|string|max:255|unique:users',
         ]);
+        if ($validator->fails()) {
+            return $this->errorResponse($validator->errors(), 422);
+        }
 
-        $exists = User::where('username', $request->username)->exists();
+        $exists = User::where('user_name', $request->user_name)->exists();
 
         if ($exists) {
             return $this->errorResponse('The username already exists.', 409);
         }
 
-        return $this->successResponse([], 'The username is available.');
+        return $this->successResponse([],'The username is available.',200);
     }
 }
